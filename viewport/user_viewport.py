@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
-
-from tkinter import Tk, StringVar, Label, Entry, Button
+import time
+from tkinter import Tk, StringVar, Label, Entry, Button, Message
 from tkinter.filedialog import askdirectory
 from manager.file_manager import FileManager
 
@@ -12,6 +12,7 @@ class BaseViewPort(object):
         self.tk.title('My CustomTools')
         self.source_entry = StringVar()
         self.target_entry = StringVar()
+        self.message = StringVar()
 
     def set_windows_size(self, x: int, y: int):
         self.tk.geometry(f'{x}x{y}')
@@ -31,6 +32,7 @@ class BaseViewPort(object):
         Button(self.tk, text='Pull', command=None).grid(row=1, column=2)
         ''''''
         Button(self.tk, text='查询记录', command=None).grid(row=2, column=0)
+        Message(self.tk, textvariable=self.message).grid(row=3, rowspan=4, columnspan=4)
 
     def load_path(self):
         filename = askdirectory()
@@ -43,6 +45,7 @@ class BaseViewPort(object):
         source_dir_path = self.get_path()
         fm = FileManager(source_dir_path)
         fm.push()
+        self.message.set(f'{time.time()} --- push file success')
 
 
 a = BaseViewPort()

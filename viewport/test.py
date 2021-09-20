@@ -1,27 +1,48 @@
-import tkinter as tk
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+import threading
+import time
+import os
+import shutil
 
 
-class Main(tk.Tk):
+class A(threading.Thread):
     def __init__(self):
-        tk.Tk.__init__(self)
-        #INTEGER
-        self.integer = tk.IntVar()
-        self.integer.set(0)
-        #BUTTONS
-        tk.Button(self, text='Quit', command=self.destroy).pack()
-        tk.Button(self, text='+', command=self.plus_one).pack()
-        tk.Button(self, text='-', command=self.take_one).pack()
-        #ENTRY
-        self.entry0 = tk.Entry(self, textvariable=str(self.integer), justify="center", width=4)
-        self.entry0.pack()
+        threading.Thread.__init__(self)
 
-    def plus_one(self):
-        x =  self.integer.get() + 1
-        self.integer.set(x)
+    def run(self):
+        shutil.copy(r'D:\MF_Code\UATools\CustomTools\viewport\test.apk',
+                    r'D:\MF_Code\UATools\CustomTools\viewport\test.txt.1')
 
-    def take_one(self):
-        x =  self.integer.get() - 1
-        self.integer.set(x)
 
-app = Main()
-app.mainloop()
+class B(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        x = 0
+        y = 0
+        if os.path.isfile("test.apk"):
+            y = os.stat("test.apk")[6]
+        while x < y:
+            if os.path.isfile("test.txt.1"):
+                x = os.stat("test.txt.1")[6]
+            else:
+                x = os.stat("test.txt.1")[6]
+            b = 0
+            a = int((x / y) * 100)
+            b = int(a - b)
+            j = '#' * int(b / 2)
+            print(str(a) + "% ||" + j + "||" + "\r")
+
+
+def test():
+    t1 = A()
+    t2 = B()
+    t1.start()
+    time.sleep(0.1)
+    t2.start()
+
+
+if __name__ == '__main__':
+    test()
